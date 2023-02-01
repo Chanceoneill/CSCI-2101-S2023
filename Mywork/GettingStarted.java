@@ -8,7 +8,7 @@ public class GettingStarted { // this is a class decloration
         System.out.println( "Hello world"); // this is a print statement
         //inside the statement is an expression (System.out.println)
         // "Hello world" is a string literal-> Java Data Types
-        System.out.println(x: this is our first java program);
+        System.out.println( "This is our first java program");
         //Java Data Types
         //int, double, float, char, boolean, String
         //int -> integer| 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
@@ -23,7 +23,7 @@ public class GettingStarted { // this is a class decloration
         // JAVA NON-PRIMITIVE DATA TYPES
         // NON-PRIMITIVE DATA TYPES ARE NOT BUILT INTO JAVA
         // String
-
+    
         // JAVA OPERATORS
         // +, -, *, /, %, ++, --, +=, -=, *=, /=, %=, ==, !=, >, <, >=, <=, &&, ||, !  note: ! is the same as 'not'
         // JAVA KEYWORDS (P&PS1)
@@ -109,7 +109,7 @@ public class GettingStarted { // this is a class decloration
         // STRING CONCATENATION
         // String concatenation is the process of appending one string to the end of another string
         // Examples of string concatenation
-        System.out.println("String Concatenation");
+        System.out.println ("String Concatenation");
         String firstName = "John";
         String lastName = "Doe";
         System.out.println(firstName);
