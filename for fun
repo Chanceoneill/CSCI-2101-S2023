@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pac-Man Clone</title>
+    <style>
+        canvas {
+            background-color: black;
+            display: block;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Player settings
+        let player = {
+            x: 50,
+            y: 50,
+            radius: 20,
+            speed: 5,
+            direction: 0  // 0 = right, 1 = down, 2 = left, 3 = up
+        };
+
+        // Handle keyboard input
+        document.addEventListener("keydown", function(event) {
+            if (event.key === "ArrowRight") player.direction = 0;
+            if (event.key === "ArrowDown")  player.direction = 1;
+            if (event.key === "ArrowLeft")  player.direction = 2;
+            if (event.key === "ArrowUp")    player.direction = 3;
+        });
+
+        function update() {
+            if (player.direction === 0) player.x += player.speed;
+            if (player.direction === 1) player.y += player.speed;
+            if (player.direction === 2) player.x -= player.speed;
+            if (player.direction === 3) player.y -= player.speed;
+
+            // Boundary check
+            if (player.x - player.radius < 0) player.x = player.radius;
+            if (player.x + player.radius > canvas.width) player.x = canvas.width - player.radius;
+            if (player.y - player.radius < 0) player.y = player.radius;
+            if (player.y + player.radius > canvas.height) player.y = canvas.height - player.radius;
+        }
+
+        function drawPacMan(x, y, radius, direction) {
+            ctx.beginPath();
+            
+            // Open-mouth angles based on direction
+            let startAngle, endAngle;
+            if (direction === 0) { startAngle = 0.2 * Math.PI; endAngle = -0.2 * Math.PI; } // Right
+            if (direction === 1) { startAngle = 0.7 * Math.PI; endAngle = 1.3 * Math.PI; } // Down
+            if (direction === 2) { startAngle = 1.2 * Math.PI; endAngle = 0.8 * Math.PI; } // Left
+            if (direction === 3) { startAngle = 1.7 * Math.PI; endAngle = 2.3 * Math.PI; } // Up
+
+            ctx.arc(x, y, radius, startAngle, endAngle, false);
+            ctx.lineTo(x, y);
+            ctx.closePath();
+
+            // Fill gradient (Blue-Green)
+            let gradient = ctx.createLinearGradient(x - radius, y - radius, x + radius, y + radius);
+            gradient.addColorStop(0, "blue");
+            gradient.addColorStop(1, "green");
+            ctx.fillStyle = gradient;
+            ctx.fill();
+
+            // Eye
+            ctx.beginPath();
+            let eyeX = direction === 0 ? x + radius / 4 : x - radius / 4;
+            let eyeY = y - radius / 2.5;
+            ctx.arc(eyeX, eyeY, radius / 5, 0, Math.PI * 2);
+            ctx.fillStyle = "white";
+            ctx.fill();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPacMan(player.x, player.y, player.radius, player.direction);
+        }
+
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
+</body>
+</html>
